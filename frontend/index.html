@@ -41,13 +41,13 @@
 
             <div class="area-treinos">
                 <div class="semana">
-                    <button class="btn-dia active" data-dia="D">d</button>
-                    <button class="btn-dia" data-dia="S">s</button>
-                    <button class="btn-dia" data-dia="T">t</button>
-                    <button class="btn-dia" data-dia="Q1">q</button>
-                    <button class="btn-dia" data-dia="Q2">q</button>
-                    <button class="btn-dia" data-dia="S2">s</button>
-                    <button class="btn-dia" data-dia="S3">s</button>
+                    <button class="btn-dia active" data-dia="Domingo">Domingo</button>
+                    <button class="btn-dia" data-dia="Segunda">Segunda</button>
+                    <button class="btn-dia" data-dia="Terca">Terça</button>
+                    <button class="btn-dia" data-dia="Quarta">Quarta</button>
+                    <button class="btn-dia" data-dia="Quinta">Quinta</button>
+                    <button class="btn-dia" data-dia="Sexta">Sexta</button>
+                    <button class="btn-dia" data-dia="Sabado">Sabado</button>
                 </div>
                 <div class="treino_diario">
                     <h3>Sequência de Treino</h3>
@@ -74,6 +74,55 @@
     </div>
 </div>
 
+<!-- MODAL DE EDIÇÃO DE PERFIL -->
+<div id="modal-perfil" class="modal escondido">
+    <div class="modal-perfil-conteudo">
+        <button id="btn-voltar-perfil" class="btn-voltar">← Voltar</button>
+        
+        <div class="perfil-header">
+            <div class="foto-perfil grande"></div>
+            <h2>Editar Informações</h2>
+        </div>
+
+        <form id="form-editar-perfil" class="grid-inputs">
+            <div class="campo grid-full">
+                <label for="edit-foto-file">Escolher Foto de Perfil (do PC)</label>
+                <input type="file" id="edit-foto-file" accept="image/*" />
+            </div>
+            <div class="campo">
+                <label for="edit-nome">Nome</label>
+                <input type="text" id="edit-nome" required />
+            </div>
+
+            <div class="campo">
+                <label for="edit-altura">Altura (cm)</label>
+                <input type="number" id="edit-altura" required />
+            </div>
+
+            <div class="campo">
+                <label for="edit-idade">Idade</label>
+                <input type="number" id="edit-idade" />
+            </div>
+
+            <div class="campo">
+                <label for="edit-envergadura">Envergadura (cm)</label>
+                <input type="number" id="edit-envergadura" />
+            </div>
+
+            <div class="campo">
+                <label for="edit-al-ver">Alcance Vertical (cm)</label>
+                <input type="number" id="edit-al-ver" />
+            </div>
+
+            <div class="campo">
+                <label for="edit-posicao">Posição</label>
+                <input type="text" id="edit-posicao" placeholder="Ex: Armador" />
+            </div>
+
+            <button type="submit" id="btn-salvar-perfil" class="btn-salvar">Alterar Info</button>
+        </form>
+    </div>
+</div>
     <script src="script.js"></script>
 </body>
 </html>

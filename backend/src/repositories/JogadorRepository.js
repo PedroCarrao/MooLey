@@ -7,10 +7,20 @@ class JogadorRepository {
     return rows;
   }
 
+  // Alias para o Service
+  async listar() {
+    return await this.findAll();
+  }
+
   async findById(id) {
     const query = 'SELECT * FROM public.jogador WHERE id = $1;';
     const { rows } = await pool.query(query, [id]);
     return rows[0] || null;
+  }
+
+  // Alias para resolver o erro 'obterPorId is not a function'
+  async obterPorId(id) {
+    return await this.findById(id);
   }
 
   async create(dados) {
@@ -31,18 +41,40 @@ class JogadorRepository {
     return rows[0];
   }
 
+  // Alias para o Service
+  async criar(dados) {
+    return await this.create(dados);
+  }
+
   async delete(id) {
     const query = 'DELETE FROM public.jogador WHERE id = $1;';
     const result = await pool.query(query, [id]);
     return (result.rowCount ?? 0) > 0;
   }
+
+  // Alias para o Service
+  async deletar(id) {
+    return await this.delete(id);
+  }
+
   async findByNomeEAltura(nome, altura) {
-  const result = await pool.query(
-    'SELECT * FROM jogador WHERE LOWER(nome) = LOWER($1) AND altura = $2',
-    [nome, altura]
-  );
-  return result.rows[0];
-}
+    const result = await pool.query(
+      'SELECT * FROM public.jogador WHERE LOWER(nome) = LOWER($1) AND altura = $2;',
+      [nome, altura]
+    );
+    return result.rows[0];
+  }
+
+  async atualizar(id, dados) {
+    const { nome, altura, posicao, idade, envergadura, al_ver } = dados;
+    const result = await pool.query(
+      `UPDATE public.jogador 
+       SET nome = $1, altura = $2, posicao = $3, idade = $4, envergadura = $5, al_ver = $6 
+       WHERE id = $7 RETURNING *;`,
+      [nome, altura, posicao, idade, envergadura, al_ver, id]
+    );
+    return result.rows[0];
+  }
 }
 
 module.exports = JogadorRepository;

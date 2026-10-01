@@ -36,6 +36,10 @@ class JogadorService {
     await this.obterPorId(id);
     await this.jogadorRepository.deletar(id);
   }
+  async atualizar(id, dados) {
+  await this.obterPorId(id); // Garante que o jogador existe
+  return await this.jogadorRepository.atualizar(id, dados);
+}
 }
 
 module.exports = JogadorService;

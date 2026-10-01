@@ -49,6 +49,15 @@ class JogadorController {
       res.status(400).json({ error: error.message });
     }
   }
+  async atualizar(req, res) {
+  try {
+    const { id } = req.params;
+    const jogadorAtualizado = await jogadorService.atualizar(id, req.body);
+    res.json(jogadorAtualizado);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+}
 }
 
 module.exports = JogadorController;
