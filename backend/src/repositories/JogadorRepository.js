@@ -36,6 +36,13 @@ class JogadorRepository {
     const result = await pool.query(query, [id]);
     return (result.rowCount ?? 0) > 0;
   }
+  async findByNomeEAltura(nome, altura) {
+  const result = await pool.query(
+    'SELECT * FROM jogador WHERE LOWER(nome) = LOWER($1) AND altura = $2',
+    [nome, altura]
+  );
+  return result.rows[0];
+}
 }
 
 module.exports = JogadorRepository;

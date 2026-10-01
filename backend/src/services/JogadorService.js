@@ -5,30 +5,36 @@ class JogadorService {
     this.jogadorRepository = new JogadorRepository();
   }
 
-  async listarTodos() {
-    return await this.jogadorRepository.findAll();
+  async listar() {
+    return await this.jogadorRepository.listar();
   }
 
-  async buscarPorId(id) {
-    const jogador = await this.jogadorRepository.findById(id);
+  async obterPorId(id) {
+    const jogador = await this.jogadorRepository.obterPorId(id);
     if (!jogador) {
       throw new Error('Jogador não encontrado.');
     }
     return jogador;
   }
 
-  async criarJogador(dados) {
-    if (!dados.nome || !dados.idade || dados.idade <= 0) {
-      throw new Error('Dados do jogador inválidos.');
+  async autenticarJogador(nome, altura) {
+    const jogador = await this.jogadorRepository.findByNomeEAltura(nome, altura);
+    if (!jogador) {
+      throw new Error('Jogador não encontrado com este nome e altura.');
     }
-    return await this.jogadorRepository.create(dados);
+    return jogador;
   }
 
-  async deletarJogador(id) {
-    const deletado = await this.jogadorRepository.delete(id);
-    if (!deletado) {
-      throw new Error('Jogador não encontrado para remoção.');
+  async criar(dados) {
+    if (!dados.nome || !dados.altura) {
+      throw new Error('Nome e altura são obrigatórios.');
     }
+    return await this.jogadorRepository.criar(dados);
+  }
+
+  async deletar(id) {
+    await this.obterPorId(id);
+    await this.jogadorRepository.deletar(id);
   }
 }
 

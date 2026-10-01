@@ -1,47 +1,54 @@
 const JogadorService = require('../services/JogadorService');
+const jogadorService = new JogadorService();
 
 class JogadorController {
-  constructor() {
-    this.jogadorService = new JogadorService();
+  async listar(req, res) {
+    try {
+      const jogadores = await jogadorService.listar();
+      res.json(jogadores);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
   }
 
-  listar = async (req, res) => {
+  async obterPorId(req, res) {
     try {
-      const jogadores = await this.jogadorService.listarTodos();
-      return res.status(200).json(jogadores);
+      const { id } = req.params;
+      const jogador = await jogadorService.obterPorId(id);
+      res.json(jogador);
     } catch (error) {
-      return res.status(500).json({ error: error.message });
+      res.status(404).json({ error: error.message });
     }
-  };
+  }
 
-  obterPorId = async (req, res) => {
+  async login(req, res) {
     try {
-      const id = Number(req.params.id);
-      const jogador = await this.jogadorService.buscarPorId(id);
-      return res.status(200).json(jogador);
+      const { nome, altura } = req.body;
+      const jogador = await jogadorService.autenticarJogador(nome, altura);
+      res.json(jogador);
     } catch (error) {
-      return res.status(404).json({ error: error.message });
+      res.status(401).json({ error: error.message });
     }
-  };
+  }
 
-  criar = async (req, res) => {
+  async criar(req, res) {
     try {
-      const novoJogador = await this.jogadorService.criarJogador(req.body);
-      return res.status(201).json(novoJogador);
+      const novoJogador = await jogadorService.criar(req.body);
+      res.status(201).json(novoJogador);
     } catch (error) {
-      return res.status(400).json({ error: error.message });
+      res.status(400).json({ error: error.message });
     }
-  };
+  }
 
-  deletar = async (req, res) => {
+  async deletar(req, res) {
     try {
-      const id = Number(req.params.id);
-      await this.jogadorService.deletarJogador(id);
-      return res.status(204).send();
+      const { id } = req.params;
+      await jogadorService.deletar(id);
+      res.status(204).send();
     } catch (error) {
-      return res.status(400).json({ error: error.message });
+      res.status(400).json({ error: error.message });
     }
-  };
+  }
 }
 
 module.exports = JogadorController;

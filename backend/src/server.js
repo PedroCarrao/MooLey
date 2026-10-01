@@ -1,9 +1,10 @@
 const express = require('express');
 const jogadorRoutes = require('./routes/jogadorRoutes');
+const cors = require('cors');
 const sequenciaTreinoRoutes = require('./routes/sequenciaTreinoRoutes');
 
 const app = express();
-
+app.use(cors());
 app.use(express.json());
 
 // Rotas da aplicação
